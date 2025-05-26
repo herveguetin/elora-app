@@ -1,0 +1,36 @@
+Nom fonctionnel ,Type de champs ,Exemple ,Prestashop (Champs),Nom Shopify,Réponse Elora,Commentaires DN'D ,Source de la donnée,Nature,Metafields type Shopify,"Metafields data type Shopify
+NE PAS TOUCHER ❌","Code Shopify
+⚠️ UNIQUEMENT SI METAFIELD","Type de resource Shopify
+⚠️ UNIQUEMENT SI METAFIELD",Nombre de valeurs,Filtre ,Label ,PLP,Fiche produit ,Champs obligatoires 
+Référence interne (SKU),Texte,22DALIAECR_32,,,,,Prestashop ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Référence interne (SKU),Texte,22DALIAECR,,,,,Prestashop ,Création,Text > Single line text,single_line_text_field,sku,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Statut de visibilité,Booléen,Active,,,,,Prestashop ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,TRUE
+Images produit,Image (URL),- ,,,,,Prestashop ,Natif ,,,,,Plusieurs valeurs ,FALSE,FALSE,TRUE,TRUE,TRUE
+ID de la vidéo  embed ,Embed,lyI4_MuNtpU,,,,,Prestashop ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,
+Nom du produit,Texte,Jean mom écru en coton responsable,,,,,Prestashop ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,TRUE,TRUE,TRUE
+Page Title ,Texte,- ,,,,,Shopify ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,TRUE
+Meta description ,Texte,- ,,,,,Shopify ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,TRUE
+Description produit,HTML/Texte,"Vous l'aviez déjà en noir ou couleur jean ? Il vous manque ce coloris écru ! Notre fameux jean mom en denim effet ""raw"" délavage et griffures pour un look usé vintage. Sa coupe confort aux hanches et aux cuisses convient à la plupart des morphologies, vous serez à l'aise en toutes circonstances. Confectionné en coton BCI et certifié STANDARD 100 by OEKO-TEX®, ce jean mom écru se portera été comme hiver, pour illuminer chacun de vos looks. Pantalon 5 poches : 2 poches cavalières et 1 poche ticket devant. 2 poches plaquées au dos. Ouverture par bouton et zip. Surpiqures contrastées. Jacron.",,,,,Prestashop ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Stock,Numérique,10,,,,,PRIOS,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,TRUE
+Prix TTC,Numérique,74.1€,,,,,PRIOS,Natif ,,,,,1 seul valeur ,TRUE,FALSE,TRUE,TRUE,TRUE
+Ancien prix (prix barré),Numérique,80€,,,,,Shopify ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,
+Application de taxe ,Booléen,Oui ,,,,,Shopify ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,TRUE
+Couleur,Texte,Ecru ,,Coloris,,,Prestashop ,Création,Text > Single line text,single_line_text_field,coloris,PRODUCT,Plusieurs valeurs ,TRUE,FALSE,FALSE,TRUE,TRUE
+Variante – taille,Texte,38,,Taille,,,Prestashop ,Création,,,,,Plusieurs valeurs ,TRUE,FALSE,TRUE,TRUE,TRUE
+Genre,Texte,Femme ,,Genre,,,Prestashop ,Création,Text > Single line text,single_line_text_field,genre,PRODUCT,Plusieurs valeurs ,TRUE,FALSE,FALSE,FALSE,TRUE
+Marque,Texte,Elora ,,,,,Prestashop ,Natif ,,,,,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,FALSE
+Création / Made in,Texte ,Le Bourget ,,Creation,,,Prestashop ,Création,Text > Single line text,single_line_text_field,creation,PRODUCT,Plusieurs valeurs ,FALSE,FALSE,FALSE,TRUE,
+Taille et Coupe ,Texte ,,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,FALSE
+Matière/Composition ,Texte,100% coton responsable,,Composition,,,Prestashop ,Création,Text > Single line text,single_line_text_field,matiere,PRODUCT,Plusieurs valeurs ,TRUE,FALSE,FALSE,TRUE,TRUE
+,,,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,FALSE
+Présence potentielle de substances dangereuses,Booléen,Non,,Présence substances dangereuses,,,Prestashop ,Création,Other > True or false,boolean,substance_dangereuse,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Présence de microfibres plastiques,Booléen,Non,,Présence microfibres plastiques,,,Prestashop ,Création,Other > True or false,boolean,plastique,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Traçabilité/tissage/tricotage,Texte,France ,,Tissage Tricotage,,,Prestashop ,Création,Text > Single line text,single_line_text_field,tissage_tricotage,PRODUCT,Plusieurs valeurs ,FALSE,FALSE,FALSE,TRUE,TRUE
+Tracabilité de confection ,Texte,France ,,Confection,,,Prestashop ,Création,Text > Single line text,single_line_text_field,confection,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Tracabilité teinte/impression,Texte,France ,,Teinte Impression,,,Prestashop ,Création,Text > Single line text,single_line_text_field,teinture_impression,PRODUCT,Plusieurs valeurs ,FALSE,FALSE,FALSE,TRUE,TRUE
+Guide d'entretien ,Texte,-,,Entretien,,,,Création,Text > Multi-line text,multi_line_text_field,entretien,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,
+Tags,Liste de texte,-,,,,,Prestashop ,Natif ,,,,,Plusieurs valeurs ,FALSE,FALSE,FALSE,FALSE,
+Eco-friendly,Booléen,Oui ,,Eco-responsable,,,Prestashop ,Création,Other > True or false,boolean,eco_responsable,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,TRUE,TRUE
+Label,Texte,certifié STANDARD 100 by OEKO-TEX®,,Label,,,Prestashop ,Création,Text > Single line text,single_line_text_field,label,PRODUCT,Plusieurs valeurs ,FALSE,TRUE,FALSE,TRUE,TRUE
+Lien de partage produit (uniquement pour SP affiliation) ,,,,,,,,,,,,,,FALSE,FALSE,FALSE,TRUE,
+Google merchant center ,Booléen,Oui ,,Google Merchant Center,,,Prestashop ,Création,Other > True or false,boolean,google_merchant_center,PRODUCT,1 seul valeur ,FALSE,FALSE,FALSE,FALSE,

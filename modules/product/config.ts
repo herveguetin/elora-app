@@ -1,0 +1,1 @@
+export const METAFIELDS_FILEPATH = "./modules/product/data/metafields.csv"

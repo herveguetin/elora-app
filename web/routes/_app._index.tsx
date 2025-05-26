@@ -1,66 +1,30 @@
-import { AutoTable } from "@gadgetinc/react/auto/polaris";
 import {
   Banner,
   BlockStack,
   Box,
+  Button,
   Card,
+  InlineStack,
   Layout,
-  Link,
+  List,
   Page,
   Text,
 } from "@shopify/polaris";
-import { api } from "../api";
+import { useState } from "react";
+
+enum Operation {
+  CREATE,
+  REMOVE_UNPINNED,
+}
 
 export default function Index() {
+
   return (
-    <Page title="App">
+    <Page title="Elora">
       <Layout>
         <Layout.Section>
-          <Banner tone="success">
-            <Text variant="bodyMd" as="p">
-              Successfully connected your Gadget app to Shopify
-            </Text>
-          </Banner>
-        </Layout.Section>
-        <Layout.Section>
           <Card>
-            <BlockStack gap="200" inlineAlign="center">
-              <gadget-sparkle-button onClick={() => window.open(`/edit/preview?openShopifyOnboarding=true`, '_top')} style={{ width: "300px", marginTop: "32px", marginBottom: "32px" }}>
-                Start building your app
-              </gadget-sparkle-button>
-              <Text variant="bodyMd" as="p" alignment="center">
-                or edit this page's code directly:&nbsp;
-                <Link
-                  url={`/edit/files/web/routes/_app._index.tsx?openShopifyOnboarding=true`}
-                  target="_blank"
-                  removeUnderline
-                >
-                  web/routes/_app._index.tsx
-                </Link>
-              </Text>
-            </BlockStack>
-          </Card>
-        </Layout.Section>
-        <Layout.Section>
-          <Card padding="0">
-            {/* use Autocomponents to build UI quickly: https://docs.gadget.dev/guides/frontend/autocomponents  */}
-            <AutoTable
-              //@ts-ignore
-              model={api.shopifyShop}
-              columns={["name", "countryName", "currency", "customerEmail"]}
-            />
-            <Box padding="400">
-              <Text variant="headingMd" as="h6">
-                Shop records fetched from:{" "}
-                <Link
-                  url={`/edit/model/DataModel-Shopify-Shop/data`}
-                  target="_blank"
-                  removeUnderline
-                >
-                  api/models/shopifyShop/data
-                </Link>
-              </Text>
-            </Box>
+            <p>Bienvenue !</p>
           </Card>
         </Layout.Section>
       </Layout>

@@ -7,6 +7,10 @@ node_modules/
 extensions/**/dist
 extensions/**/node_modules
 extensions/**/generated
-shopify.app.*.toml
 .env.*
 .shopify
+
+# Shopify .toml files
+shopify.app*.toml
+!shopify.app.elora-preprod.toml
+!shopify.app.toml

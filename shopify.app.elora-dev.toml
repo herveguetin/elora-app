@@ -1,8 +1,8 @@
 # Learn more about working with Shopify TOML files with Gadget at https://docs.gadget.dev/guides/plugins/shopify/advanced-topics/shopify-app-toml
 
-client_id = "3ce9cf43f05ba9958ce282241baf87c9"
-name = "Elora"
-application_url = "https://elora.gadget.app/api/shopify/install-or-render"
+client_id = "62e72dfcb954884791a24a433a2066f5"
+name = "[Elora] Dev"
+application_url = "https://elora-dev.gadget.app/api/shopify/install-or-render"
 embedded = true
 
 [build]
@@ -12,12 +12,12 @@ embedded = true
 include_config_on_deploy = false
 
 [auth]
-redirect_urls = ["https://elora.gadget.app/api/connections/auth/shopify/callback"]
+redirect_urls = ["https://elora-dev.gadget.app/api/connections/auth/shopify/callback"]
 
 [webhooks]
 api_version = "2025-04"
 
 [app_proxy]
-url = "https://elora.gadget.app"
+url = "https://elora-dev.gadget.app"
 subpath = "dnd"
 prefix = "apps"

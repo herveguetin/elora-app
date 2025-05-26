@@ -5,7 +5,10 @@ export function NavMenu() {
   return (
     <AppBridgeNavMenu>
       <Link to="/" rel="home">
-        Shop Information
+        Elora
+      </Link>
+      <Link to="/developer">
+        Developer
       </Link>
     </AppBridgeNavMenu>
   );
