@@ -1,8 +1,7 @@
-import { json } from "@remix-run/node";
+import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { makeAuthContext } from "modules";
-import { MixedFunctionArgs } from "types";
 
-export async function loader({ request, params, context }: MixedFunctionArgs) {
+export async function loader({ request, params, context }: LoaderFunctionArgs) {
   makeAuthContext({ request, context });
   const { id: wishlistId, productGid } = params;
 
