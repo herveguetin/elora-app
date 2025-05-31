@@ -1,7 +1,7 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { CustomFunctionArgs } from "types";
 import { getPlannerByAttribute, getShopifyPlanner, makeAuthContext } from "../../modules";
 
-export async function loader({ request, params, context }: LoaderFunctionArgs) {
+export async function loader({ request, params, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context })
   const handle = params.handle!;
   try {

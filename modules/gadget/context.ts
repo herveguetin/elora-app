@@ -1,5 +1,5 @@
 import { ShopifyShopRecord } from ".gadget/client/types-esm";
-import { AppLoadContext } from "@remix-run/node";
+import { CustomContext } from "types";
 import { authenticateAppProxy } from "./app-proxy";
 import { getStorefrontClient } from "./storefront-api";
 
@@ -8,9 +8,8 @@ export const makeAuthContext = async ({
   context,
 }: {
   request: Request;
-  context: AppLoadContext;
+  context: CustomContext;
 }): Promise<void> => {
-
   // Make sure request comes from the Shopify store
   authenticateAppProxy({ request, context });
 
@@ -27,11 +26,11 @@ export const makeAuthContext = async ({
 
   // Add custom entries to context
   context.storefront = storefrontClient;
-  context.country = context.request.raw.headers["x-app-country"];
-  context.locale = context.request.raw.headers["x-app-locale"];
+  context.country = context.request.raw.headers["x-app-country"] as string;
+  context.locale = context.request.raw.headers["x-app-locale"] as string;
 };
 
-const setCurrentShop = async (context: AppLoadContext): Promise<ShopifyShopRecord> => {
+const setCurrentShop = async (context: CustomContext): Promise<ShopifyShopRecord> => {
   const requestShop = (context.request.query as { shop?: string }).shop;
   const shopifyShop = await context.api.shopifyShop.findFirst({
     filter: {

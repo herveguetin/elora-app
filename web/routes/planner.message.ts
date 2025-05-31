@@ -1,7 +1,7 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { CustomFunctionArgs } from "types";
 import { makeAuthContext } from "../../modules/gadget";
 
-export async function action({ request, context }: LoaderFunctionArgs) {
+export async function action({ request, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
 
   if (context.request.method === "POST") {
@@ -10,7 +10,7 @@ export async function action({ request, context }: LoaderFunctionArgs) {
        * @todo Implement actuial formData treatment
        */
       const formData = await request.formData();
-      return { post: Object.fromEntries(formData.entries()) };
+      return { post: Object.fromEntries((formData as any).entries()) };
     } catch (error) {
       context.logger.error({ error }, "[planner] Error sending message to planner");
       return { success: false };

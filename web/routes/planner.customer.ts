@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { CustomFunctionArgs } from "types";
 import { makeAuthContext } from "../../modules/gadget";
 import {
   affiliatePlannerToCustomer,
@@ -7,7 +7,7 @@ import {
   getCustomerPlanner,
 } from "../../modules/planner";
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
   const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
 
@@ -22,7 +22,7 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   return { customerPlanner, adminPlanner };
 }
 
-export async function action({ request, context }: LoaderFunctionArgs) {
+export async function action({ request, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
 
   if (context.request.method === "DELETE") {

@@ -1,5 +1,5 @@
 import { PlannerRecord } from ".gadget/client/types-esm";
-import { AppLoadContext } from "@remix-run/node";
+import { CustomContext } from "types";
 import { CUSTOMER_PLANNER_METAFIELD_KEY, CUSTOMER_PLANNER_METAFIELD_NAMESPACE } from "../customer/config";
 import { CUSTOMER_QUERY } from "../customer/graphql/Queries";
 import { parseFields } from "../framework";
@@ -9,7 +9,7 @@ import { getPlannerByAttribute } from "./model";
 import { AffiliatePlannerPayload } from "./types";
 
 export const getCustomerPlanner = async (
-  context: AppLoadContext,
+  context: CustomContext,
   customerId: string
 ): Promise<Record<string, string> | null> => {
   const shopify = context.connections.shopify.current!;
@@ -30,7 +30,7 @@ export const getCustomerPlanner = async (
   }
 };
 
-export const clearCustomerPlanner = async (context: AppLoadContext, customerId: string): Promise<void> => {
+export const clearCustomerPlanner = async (context: CustomContext, customerId: string): Promise<void> => {
   const gid = `gid://shopify/Customer/${customerId}`;
   const shopify = context.connections.shopify.current!;
   await shopify.graphql(CLEAR_CUSTOMER_PLANNER, {
@@ -45,7 +45,7 @@ export const clearCustomerPlanner = async (context: AppLoadContext, customerId: 
 };
 
 export const getAdminPlanner = async (
-  context: AppLoadContext,
+  context: CustomContext,
   customerId: string
 ): Promise<Record<string, string> | null> => {
   const shopify = context.connections.shopify.current!;
@@ -63,7 +63,7 @@ export const getAdminPlanner = async (
 };
 
 export const getShopifyPlanner = async (
-  context: AppLoadContext,
+  context: CustomContext,
   gid: string
 ): Promise<Record<string, string>> => {
   const shopify = context.connections.shopify.current!;
@@ -72,7 +72,7 @@ export const getShopifyPlanner = async (
 };
 
 export const affiliatePlannerToCustomer = async (
-  context: AppLoadContext,
+  context: CustomContext,
   payload: AffiliatePlannerPayload
 ): Promise<void> => {
   const gid = `gid://shopify/Customer/${payload.customerId}`;

@@ -1,5 +1,5 @@
-import { AppLoadContext } from "@remix-run/node";
 import crypto from "crypto";
+import { CustomContext } from "types";
 
 const SIGNATURE_PARAM = "signature";
 
@@ -8,7 +8,7 @@ export const authenticateAppProxy = ({
   context,
 }: {
   request: Request;
-  context: AppLoadContext;
+  context: CustomContext;
 }): boolean => {
   if (!context.config.SHOPIFY_APP_CLIENT_SECRET) {
     throw new Error("Missing SHOPIFY_APP_CLIENT_SECRET environment variable.");

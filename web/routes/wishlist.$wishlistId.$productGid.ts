@@ -1,7 +1,7 @@
-import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { makeAuthContext } from "modules";
+import { CustomFunctionArgs } from "types";
 
-export async function loader({ request, params, context }: LoaderFunctionArgs) {
+export async function loader({ request, params, context }: CustomFunctionArgs) {
   makeAuthContext({ request, context });
   const { id: wishlistId, productGid } = params;
 
@@ -14,10 +14,9 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
     const storefront = context.storefront;
     const country = context.country;
 
-
     // Get the product details using the productGid
-    const response = await storefront.query({
-      query: `query GetProduct($id: ID!) {
+    const response = await storefront.request(
+      `query GetProduct($id: ID!) {
         product(id: $id) {
           id
           title
@@ -39,10 +38,10 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
           }
         }
       }`,
-      variables: {
+      {
         id: productGid,
-      },
-    });
+      }
+    );
 
     return json({
       product: response.data.product,
