@@ -7,10 +7,9 @@ import { CLEAR_CUSTOMER_PLANNER, SET_CUSTOMER_PLANNER } from "./graphql/Mutation
 import { CUSTOMER_PLANNER_QUERY, PLANNER_QUERY } from "./graphql/Queries";
 import { getPlannerByAttribute } from "./model";
 import { AffiliatePlannerPayload } from "./types";
-import { AmbientContext } from ".gadget/server/dist-esm";
 
 export const getCustomerPlanner = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   customerId: string
 ): Promise<Record<string, string> | null> => {
   const shopify = context.connections.shopify.current!;
@@ -46,7 +45,7 @@ export const clearCustomerPlanner = async (context: AppLoadContext, customerId: 
 };
 
 export const getAdminPlanner = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   customerId: string
 ): Promise<Record<string, string> | null> => {
   const shopify = context.connections.shopify.current!;
@@ -64,7 +63,7 @@ export const getAdminPlanner = async (
 };
 
 export const getShopifyPlanner = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   gid: string
 ): Promise<Record<string, string>> => {
   const shopify = context.connections.shopify.current!;
@@ -73,7 +72,7 @@ export const getShopifyPlanner = async (
 };
 
 export const affiliatePlannerToCustomer = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   payload: AffiliatePlannerPayload
 ): Promise<void> => {
   const gid = `gid://shopify/Customer/${payload.customerId}`;

@@ -1,7 +1,7 @@
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { makeAuthContext } from "../../modules/gadget";
-import { AmbientContextFunctionArgs } from "../../types";
 
-export async function action({ request, context }: AmbientContextFunctionArgs) {
+export async function action({ request, context }: LoaderFunctionArgs) {
   await makeAuthContext({ request, context });
 
   if (context.request.method === "POST") {

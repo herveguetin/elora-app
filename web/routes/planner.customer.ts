@@ -1,13 +1,13 @@
-import { authenticateAppProxy, makeAuthContext } from "../../modules/gadget";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { makeAuthContext } from "../../modules/gadget";
 import {
   affiliatePlannerToCustomer,
   clearCustomerPlanner,
   getAdminPlanner,
   getCustomerPlanner,
 } from "../../modules/planner";
-import { AmbientContextFunctionArgs } from "../../types";
 
-export async function loader({ request, context }: AmbientContextFunctionArgs) {
+export async function loader({ request, context }: LoaderFunctionArgs) {
   await makeAuthContext({ request, context });
   const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
 
@@ -22,8 +22,8 @@ export async function loader({ request, context }: AmbientContextFunctionArgs) {
   return { customerPlanner, adminPlanner };
 }
 
-export async function action({ request, context }: AmbientContextFunctionArgs) {
-  authenticateAppProxy({ request, context });
+export async function action({ request, context }: LoaderFunctionArgs) {
+  await makeAuthContext({ request, context });
 
   if (context.request.method === "DELETE") {
     try {

@@ -1,9 +1,9 @@
-import { AmbientContextFunctionArgs } from "types";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { getPlannerByAttribute, getShopifyPlanner, makeAuthContext } from "../../modules";
 
-export async function loader({ request, params, context }: AmbientContextFunctionArgs) {
+export async function loader({ request, params, context }: LoaderFunctionArgs) {
   await makeAuthContext({ request, context })
-  const handle = params.handle;
+  const handle = params.handle!;
   try {
     const planner = await getPlannerByAttribute(context, "handle", handle);
     const shopifyPlanner = await getShopifyPlanner(context, planner.gid);

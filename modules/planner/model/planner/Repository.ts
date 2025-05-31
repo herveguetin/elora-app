@@ -1,15 +1,15 @@
 import { PlannerRecord, ShopifyShopRecord } from ".gadget/client/types-esm";
-import { AmbientContext } from ".gadget/server/dist-esm";
+import { AppLoadContext } from "@remix-run/node";
 import { PlannerMetaobject, SyncPlannersResponse } from "modules/planner/types";
 import { PLANNERS_METAOBJECT_TYPE } from "../../../planner/config";
 import { ALL_PLANNERS_QUERY } from "../../graphql/Queries";
 
-export const getPlanners = async (context: AmbientContext): Promise<PlannerRecord[]> => {
+export const getPlanners = async (context: AppLoadContext): Promise<PlannerRecord[]> => {
   return await context.api.planner.findMany();
 };
 
 export const getPlannerByAttribute = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   attribute: string,
   value: string
 ): Promise<PlannerRecord> => {
@@ -22,7 +22,7 @@ export const getPlannerByAttribute = async (
   });
 };
 
-export const pullPlanners = async (context: AmbientContext): Promise<SyncPlannersResponse> => {
+export const pullPlanners = async (context: AppLoadContext): Promise<SyncPlannersResponse> => {
   const shops: ShopifyShopRecord[] = await context.api.shopifyShop.findMany();
 
   let response: SyncPlannersResponse = {
@@ -36,7 +36,7 @@ export const pullPlanners = async (context: AmbientContext): Promise<SyncPlanner
 };
 
 const syncPlannersForShop = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   shop: ShopifyShopRecord,
   response: SyncPlannersResponse
 ): Promise<void> => {
@@ -53,7 +53,7 @@ const syncPlannersForShop = async (
 };
 
 const syncPlanner = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   shopId: string,
   planner: PlannerMetaobject,
   response: SyncPlannersResponse
@@ -86,7 +86,7 @@ const syncPlanner = async (
 };
 
 const findPlannerToSync = async (
-  context: AmbientContext,
+  context: AppLoadContext,
   planner: PlannerMetaobject
 ): Promise<PlannerRecord | null> => {
   try {
