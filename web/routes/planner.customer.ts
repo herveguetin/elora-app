@@ -1,4 +1,4 @@
-import { authenticateAppProxy } from "../../modules/gadget";
+import { authenticateAppProxy, makeAuthContext } from "../../modules/gadget";
 import {
   affiliatePlannerToCustomer,
   clearCustomerPlanner,
@@ -8,7 +8,7 @@ import {
 import { AmbientContextFunctionArgs } from "../../types";
 
 export async function loader({ request, context }: AmbientContextFunctionArgs) {
-  authenticateAppProxy({ request, context });
+  await makeAuthContext({ request, context });
   const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
 
   // Customer not logged in => pass.

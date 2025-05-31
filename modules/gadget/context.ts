@@ -1,25 +1,46 @@
+import { ShopifyShopRecord } from ".gadget/client/types-esm";
 import { AppLoadContext } from "@remix-run/node";
+import { authenticateAppProxy } from "./app-proxy";
+import { getStorefrontClient } from "./storefront-api";
 
-export const makeContextFromAppProxy = async (context: AppLoadContext): Promise<AppLoadContext> => {
+export const makeAuthContext = async ({
+  request,
+  context,
+}: {
+  request: Request;
+  context: AppLoadContext;
+}): Promise<void> => {
+
+  // Make sure request comes from the Shopify store
+  authenticateAppProxy({ request, context });
+
   // Switch to API admin mode
   const api = context.api.actAsAdmin;
   context.api = api;
 
   // Find shop making the request and set it for Shopify connection
   // in order to handle multi-tenants
-  const shop = (context.request.query as { shop?: string }).shop;
+  const shop = await setCurrentShop(context);
+
+  // Retrieve Storefront API client for Shop
+  const storefrontClient = getStorefrontClient(shop);
+
+  // Add custom entries to context
+  context.storefront = storefrontClient;
+  context.country = context.request.raw.headers["x-app-country"];
+  context.locale = context.request.raw.headers["x-app-locale"];
+};
+
+const setCurrentShop = async (context: AppLoadContext): Promise<ShopifyShopRecord> => {
+  const requestShop = (context.request.query as { shop?: string }).shop;
   const shopifyShop = await context.api.shopifyShop.findFirst({
     filter: {
       domain: {
-        equals: shop,
+        equals: requestShop,
       },
     },
   });
   context.connections.shopify.setCurrentShop(shopifyShop.id);
 
-  // Add custom entries to context
-  context.country = context.request.raw.headers["x-app-country"];
-  context.locale = context.request.raw.headers["x-app-locale"];
-
-  return context;
+  return shopifyShop;
 };

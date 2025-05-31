@@ -1,8 +1,8 @@
-import { authenticateAppProxy } from "../../modules/gadget";
+import { makeAuthContext } from "../../modules/gadget";
 import { AmbientContextFunctionArgs } from "../../types";
 
 export async function action({ request, context }: AmbientContextFunctionArgs) {
-  authenticateAppProxy({ request, context });
+  await makeAuthContext({ request, context });
 
   if (context.request.method === "POST") {
     try {

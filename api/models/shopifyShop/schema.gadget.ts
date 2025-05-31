@@ -7,6 +7,10 @@ export const schema: GadgetModel = {
   type: "gadget/model-schema/v1",
   storageKey: "DataModel-Shopify-Shop",
   fields: {
+    frontendAccessToken: {
+      type: "encryptedString",
+      storageKey: "UnnH7ZPrBNTL::String-UnnH7ZPrBNTL",
+    },
     planners: {
       type: "hasMany",
       children: { model: "planner", belongsToField: "shop" },

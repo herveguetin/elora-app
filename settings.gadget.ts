@@ -14,6 +14,7 @@ export const settings: GadgetSettings = {
           "read_metaobjects",
           "read_customers",
           "write_customers",
+          "unauthenticated_read_product_listings",
         ],
       },
     },

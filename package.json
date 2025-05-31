@@ -24,6 +24,7 @@
     "@shopify/app-bridge-react": "^4.1.5",
     "@shopify/polaris": "^13.8.0",
     "@shopify/polaris-icons": "^9.3.0",
+    "@shopify/storefront-api-client": "^1.0.7",
     "@shopify/ui-extensions": "2025.4.x",
     "@shopify/ui-extensions-react": "2025.4.x",
     "gadget-server": "link:.gadget/server",

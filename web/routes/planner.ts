@@ -1,8 +1,8 @@
 import { AmbientContextFunctionArgs } from "types";
-import { authenticateAppProxy, getPlannerByAttribute, getPlanners, getShopifyPlanner } from "../../modules";
+import { getPlanners, makeAuthContext } from "../../modules";
 
 export async function loader({ request, context }: AmbientContextFunctionArgs) {
-  authenticateAppProxy({ request, context });
+  await makeAuthContext({ request, context });
   try {
     return await getPlanners(context);
   } catch (error) {

@@ -1,16 +1,15 @@
 import { AppLoadContext } from "@remix-run/node";
 import crypto from "crypto";
-import { makeContextFromAppProxy } from "./context";
 
 const SIGNATURE_PARAM = "signature";
 
-export const authenticateAppProxy = async ({
+export const authenticateAppProxy = ({
   request,
   context,
 }: {
   request: Request;
   context: AppLoadContext;
-}): Promise<boolean> => {
+}): boolean => {
   if (!context.config.SHOPIFY_APP_CLIENT_SECRET) {
     throw new Error("Missing SHOPIFY_APP_CLIENT_SECRET environment variable.");
   }
@@ -33,8 +32,6 @@ export const authenticateAppProxy = async ({
   if (calculatedSignature !== signature) {
     throw new Error("Invalid signature: request is not from Shopify.");
   }
-
-  await makeContextFromAppProxy(context);
 
   return true;
 };
