@@ -10,14 +10,12 @@ import {
 export async function loader({ request, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
 
-  const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
-
   // Customer not logged in => pass.
-  if (customerId === "") return { customerPlanner: null, adminPlanner: null };
+  if (context.customerGid === "") return { customerPlanner: null, adminPlanner: null };
 
   const [customerPlanner, adminPlanner] = await Promise.all([
-    getCustomerPlanner(context, customerId || ""),
-    getAdminPlanner(context, customerId || ""),
+    getCustomerPlanner(context, context.customerGid!),
+    getAdminPlanner(context, context.customerGid!),
   ]);
 
   return { customerPlanner, adminPlanner };
@@ -28,8 +26,7 @@ export async function action({ request, context }: CustomFunctionArgs) {
 
   if (context.request.method === "DELETE") {
     try {
-      const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
-      await clearCustomerPlanner(context, customerId || "");
+      await clearCustomerPlanner(context, context.customerGid!);
       return { success: true };
     } catch (error) {
       context.logger.error({ error }, "[planner] Error while clearing planner of customer");
@@ -41,8 +38,7 @@ export async function action({ request, context }: CustomFunctionArgs) {
     try {
       const body = await request.json();
       const plannerHandle = body.handle;
-      const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
-      await affiliatePlannerToCustomer(context, { plannerHandle, customerId: customerId || "" });
+      await affiliatePlannerToCustomer(context, { plannerHandle, customerGid: context.customerGid! });
       return { success: true };
     } catch (error) {
       context.logger.error({ error }, "[planner] Error while setting planner of customer");

@@ -10,14 +10,13 @@ import { AffiliatePlannerPayload } from "./types";
 
 export const getCustomerPlanner = async (
   context: CustomContext,
-  customerId: string
+  customerGid: string
 ): Promise<Record<string, string> | null> => {
   const shopify = context.connections.shopify.current!;
 
   try {
-    const gid = `gid://shopify/Customer/${customerId}`;
     const planner = await shopify.graphql(CUSTOMER_PLANNER_QUERY, {
-      id: gid,
+      id: customerGid,
       namespace: CUSTOMER_PLANNER_METAFIELD_NAMESPACE,
       key: CUSTOMER_PLANNER_METAFIELD_KEY,
     });
@@ -30,15 +29,14 @@ export const getCustomerPlanner = async (
   }
 };
 
-export const clearCustomerPlanner = async (context: CustomContext, customerId: string): Promise<void> => {
-  const gid = `gid://shopify/Customer/${customerId}`;
+export const clearCustomerPlanner = async (context: CustomContext, customerGid: string): Promise<void> => {
   const shopify = context.connections.shopify.current!;
   await shopify.graphql(CLEAR_CUSTOMER_PLANNER, {
     metafields: [
       {
         key: CUSTOMER_PLANNER_METAFIELD_KEY,
         namespace: CUSTOMER_PLANNER_METAFIELD_NAMESPACE,
-        ownerId: gid,
+        ownerId: customerGid,
       },
     ],
   });
@@ -46,10 +44,10 @@ export const clearCustomerPlanner = async (context: CustomContext, customerId: s
 
 export const getAdminPlanner = async (
   context: CustomContext,
-  customerId: string
+  customerGid: string
 ): Promise<Record<string, string> | null> => {
   const shopify = context.connections.shopify.current!;
-  const { customer } = await shopify.graphql(CUSTOMER_QUERY, { id: `gid://shopify/Customer/${customerId}` });
+  const { customer } = await shopify.graphql(CUSTOMER_QUERY, { id: customerGid });
 
   try {
     const planner: PlannerRecord = await getPlannerByAttribute(context, "email", customer.email);
@@ -75,13 +73,12 @@ export const affiliatePlannerToCustomer = async (
   context: CustomContext,
   payload: AffiliatePlannerPayload
 ): Promise<void> => {
-  const gid = `gid://shopify/Customer/${payload.customerId}`;
   const shopify = context.connections.shopify.current!;
   const planner: PlannerRecord = await getPlannerByAttribute(context, "handle", payload.plannerHandle);
   await shopify.graphql(SET_CUSTOMER_PLANNER, {
     metafields: [
       {
-        ownerId: gid,
+        ownerId: payload.customerGid,
         namespace: CUSTOMER_PLANNER_METAFIELD_NAMESPACE,
         key: CUSTOMER_PLANNER_METAFIELD_KEY,
         value: planner.gid,

@@ -13,6 +13,6 @@ export type SyncPlannersResponse = {
 };
 
 export type AffiliatePlannerPayload = {
-  customerId: string;
+  customerGid: string;
   plannerHandle: string;
 };

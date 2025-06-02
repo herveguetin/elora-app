@@ -1,6 +1,7 @@
 import { AppLoadContext, LoaderFunctionArgs } from "@remix-run/node";
 
 export type CustomContext = AppLoadContext & {
+  customerGid?: string;
   country?: string;
   locale?: string;
   storefront?: StorefrontApiClient;

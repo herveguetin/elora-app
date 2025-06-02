@@ -25,6 +25,8 @@ export const makeAuthContext = async ({
   const storefrontClient = getStorefrontClient(shop);
 
   // Add custom entries to context
+  const customerGid = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
+  context.customerGid = customerGid === "" ? "" : `gid://shopify/Customer/${customerGid}`;
   context.storefront = storefrontClient;
   context.country = (context.request.raw.headers["x-app-country"] as string).toUpperCase();
   context.locale = (context.request.raw.headers["x-app-locale"] as string).toUpperCase();
