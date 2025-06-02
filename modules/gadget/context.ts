@@ -26,8 +26,8 @@ export const makeAuthContext = async ({
 
   // Add custom entries to context
   context.storefront = storefrontClient;
-  context.country = context.request.raw.headers["x-app-country"] as string;
-  context.locale = context.request.raw.headers["x-app-locale"] as string;
+  context.country = (context.request.raw.headers["x-app-country"] as string).toUpperCase();
+  context.locale = (context.request.raw.headers["x-app-locale"] as string).toUpperCase();
 };
 
 const setCurrentShop = async (context: CustomContext): Promise<ShopifyShopRecord> => {

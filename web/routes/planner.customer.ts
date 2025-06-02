@@ -9,6 +9,7 @@ import {
 
 export async function loader({ request, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
+
   const customerId = (context.request.query as { logged_in_customer_id?: string }).logged_in_customer_id;
 
   // Customer not logged in => pass.
