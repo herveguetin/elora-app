@@ -26,16 +26,5 @@ export async function action({ request, params, context }: CustomFunctionArgs) {
       return { success: false };
     }
   }
-
-  if (context.request.method === "POST") {
-    try {
-      const body = await request.json();
-      const wishlist = await createCustomerWishlist(context, body);
-      return { success: true, wishlist };
-    } catch (error) {
-      context.logger.error({ error }, "[planner] Error while creating customer wishlist");
-      return { success: false };
-    }
-  }
   return Response.json({ error: "Method not allowed" }, { status: 405 });
 }

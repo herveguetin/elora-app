@@ -43,7 +43,7 @@ export const createCustomerWishlist = async (context: CustomContext, payload: Cr
 
   if (payload.products.length) await addItemsToWishlist(context, wishlist, productsGids);
 
-  return await getCustomerWishlist(context, wishlist.id);
+  return await getCustomerWishlists(context);
 };
 
 export const deleteCustomerWishlist = async (context: CustomContext, wishlistId: string): Promise<void> => {
@@ -64,7 +64,7 @@ export const deleteProductFromWishlist = async (
   const wishlist = await getCustomerWishlist(context, wishlistId);
   const wishlistItem = await getWishlistItem(context, wishlist.id, productGid);
   await context.api.wishlistItem.delete(wishlistItem.id);
-  return await getCustomerWishlist(context, wishlist.id);
+  return await getCustomerWishlists(context);
 };
 
 export const addProductToWishlist = async (
@@ -81,5 +81,5 @@ export const addProductToWishlist = async (
     await addItemsToWishlist(context, wishlist, [productGid]);
   }
 
-  return await getCustomerWishlist(context, wishlist.id);
+  return await getCustomerWishlists(context);
 };
