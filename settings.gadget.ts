@@ -15,6 +15,7 @@ export const settings: GadgetSettings = {
           "read_customers",
           "write_customers",
           "unauthenticated_read_product_listings",
+          "read_themes",
         ],
       },
     },

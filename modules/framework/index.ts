@@ -1,1 +1,2 @@
-export * from "./parse-fields"
+export * from "./parse-fields";
+export * from "./translations";
