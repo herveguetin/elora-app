@@ -1,6 +1,6 @@
 import type { GadgetModel } from "gadget-server";
 
-// This file describes the schema for the "wishlist" model, go to https://elora-dev.gadget.app/edit to view/edit your model in Gadget
+// This file describes the schema for the "wishlist" model, go to https://elora-sandbox.gadget.app/edit to view/edit your model in Gadget
 // For more information on how to update this file http://docs.gadget.dev
 
 export const schema: GadgetModel = {
@@ -8,6 +8,11 @@ export const schema: GadgetModel = {
   storageKey: "8Ea-2BZau2CS",
   fields: {
     customerGid: { type: "string", storageKey: "VQRwTeFB-R14" },
+    title: {
+      type: "string",
+      validations: { required: true },
+      storageKey: "wJwHHTytMoF2",
+    },
     wishlistItems: {
       type: "hasMany",
       children: { model: "wishlistItem", belongsToField: "wishlist" },

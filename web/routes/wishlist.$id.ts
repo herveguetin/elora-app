@@ -1,7 +1,41 @@
 import { CustomFunctionArgs } from "types";
-import { getCustomerWishlists, makeAuthContext } from "../../modules";
+import {
+  createCustomerWishlist,
+  deleteCustomerWishlist,
+  enrichWishlist,
+  getCustomerWishlist,
+  makeAuthContext,
+} from "../../modules";
 
-export async function loader({ request, context }: CustomFunctionArgs) {
+export async function loader({ request, params, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
-  return await getCustomerWishlists(context, context.customerGid!);
+  const wishlist = await getCustomerWishlist(context, params.wishlistId!);
+  const richWishlist = await enrichWishlist(context, wishlist.id);
+  return { richWishlist };
+}
+
+export async function action({ request, params, context }: CustomFunctionArgs) {
+  await makeAuthContext({ request, context });
+
+  if (context.request.method === "DELETE") {
+    try {
+      await deleteCustomerWishlist(context, params.id!);
+      return { success: true };
+    } catch (error) {
+      context.logger.error({ error }, "[wishlist] Error while deleting wishlist of customer");
+      return { success: false };
+    }
+  }
+
+  if (context.request.method === "POST") {
+    try {
+      const body = await request.json();
+      await createCustomerWishlist(context, body);
+      return { success: true };
+    } catch (error) {
+      context.logger.error({ error }, "[planner] Error while creating customer wishlist");
+      return { success: false };
+    }
+  }
+  return Response.json({ error: "Method not allowed" }, { status: 405 });
 }

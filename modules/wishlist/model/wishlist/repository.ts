@@ -4,10 +4,11 @@ import { CustomContext } from "types";
 export const getWishlistsForCustomer = async (
   context: CustomContext,
   customerGid: string
-): Promise<WishlistRecord[]> => {
+) => {
   return await context.api.wishlist.findMany({
     select: {
       id: true,
+      title: true,
       customerGid: true,
       createdAt: true,
       updatedAt: true,
@@ -17,6 +18,9 @@ export const getWishlistsForCustomer = async (
           node: {
             id: true,
             productGid: true,
+            createdAt: true,
+            updatedAt: true,
+            __typename: true,
           },
         },
       },
