@@ -1,8 +1,8 @@
-import { WishlistRecord } from ".gadget/client/types-esm";
 import { CustomContext } from "types";
-import { getWishlistsForCustomer, deleteWishlist } from "./model/wishlist/repository";
-import { CreateWishlistPayload, RichWishlist } from "./types";
 import { getShopifyProducts } from "../../modules/product";
+import { addItemsToWishlist, getItemByProductGid } from "./model";
+import { deleteWishlist, getWishlistsForCustomer } from "./model/wishlist/repository";
+import { CreateWishlistPayload } from "./types";
 
 export const getCustomerWishlists = async (context: CustomContext, customerGid?: string) => {
   try {
@@ -39,17 +39,9 @@ export const createCustomerWishlist = async (context: CustomContext, payload: Cr
     customerGid: context.customerGid,
   };
   const wishlist = await context.api.wishlist.create(variables);
-  if (payload.products.length) {
-    const products = payload.products.map((product) => {
-      return {
-        productGid: product.gid,
-        wishlist: {
-          _link: wishlist.id,
-        },
-      };
-    });
-    await context.api.wishlistItem.bulkCreate(products);
-  }
+  const productsGids = payload.products.map((product) => product.gid);
+
+  if (payload.products.length) await addItemsToWishlist(context, wishlist, productsGids);
 
   return await getCustomerWishlist(context, wishlist.id);
 };
@@ -57,4 +49,37 @@ export const createCustomerWishlist = async (context: CustomContext, payload: Cr
 export const deleteCustomerWishlist = async (context: CustomContext, wishlistId: string): Promise<void> => {
   const wishlist = await getCustomerWishlist(context, wishlistId);
   return await deleteWishlist(context, wishlist.id);
+};
+
+export const getWishlistItem = async (context: CustomContext, wishlistId: string, productGid: string) => {
+  const wishlist = await getCustomerWishlist(context, wishlistId);
+  return await getItemByProductGid(context, wishlist, productGid);
+};
+
+export const deleteProductFromWishlist = async (
+  context: CustomContext,
+  wishlistId: string,
+  productGid: string
+) => {
+  const wishlist = await getCustomerWishlist(context, wishlistId);
+  const wishlistItem = await getWishlistItem(context, wishlist.id, productGid);
+  await context.api.wishlistItem.delete(wishlistItem.id);
+  return await getCustomerWishlist(context, wishlist.id);
+};
+
+export const addProductToWishlist = async (
+  context: CustomContext,
+  wishlistId: string,
+  productGid: string
+) => {
+  const wishlist = await getCustomerWishlist(context, wishlistId);
+  try {
+    // Check if item exists
+    await getWishlistItem(context, wishlist.id, productGid);
+  } catch (error) {
+    // Create item if it does not exist
+    await addItemsToWishlist(context, wishlist, [productGid]);
+  }
+
+  return await getCustomerWishlist(context, wishlist.id);
 };

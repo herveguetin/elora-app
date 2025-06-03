@@ -1,26 +1,13 @@
 import { CustomFunctionArgs } from "types";
-import {
-  createCustomerWishlist,
-  deleteCustomerWishlist,
-  enrichWishlist,
-  getCustomerWishlist,
-  makeAuthContext,
-} from "../../modules";
-
-export async function loader({ request, params, context }: CustomFunctionArgs) {
-  await makeAuthContext({ request, context });
-  const wishlist = await getCustomerWishlist(context, params.wishlistId!);
-  const richWishlist = await enrichWishlist(context, wishlist.id);
-  return { richWishlist };
-}
+import { addProductToWishlist, deleteProductFromWishlist, makeAuthContext } from "../../modules";
 
 export async function action({ request, params, context }: CustomFunctionArgs) {
   await makeAuthContext({ request, context });
 
   if (context.request.method === "DELETE") {
     try {
-      await deleteCustomerWishlist(context, params.id!);
-      return { success: true };
+      const wishlist = await deleteProductFromWishlist(context, params.id!, params.productGid!);
+      return { success: true, wishlist };
     } catch (error) {
       context.logger.error({ error }, "[wishlist] Error while deleting wishlist of customer");
       return { success: false };
@@ -29,8 +16,7 @@ export async function action({ request, params, context }: CustomFunctionArgs) {
 
   if (context.request.method === "POST") {
     try {
-      const body = await request.json();
-      const wishlist = await createCustomerWishlist(context, body);
+      const wishlist = await addProductToWishlist(context, params.id!, params.productGid!);
       return { success: true, wishlist };
     } catch (error) {
       context.logger.error({ error }, "[planner] Error while creating customer wishlist");
