@@ -19,8 +19,7 @@ export async function action({ request, params, context }: CustomFunctionArgs) {
 
   if (context.request.method === "DELETE") {
     try {
-      await deleteCustomerWishlist(context, params.id!);
-      return { success: true };
+      return await deleteCustomerWishlist(context, params.id!);
     } catch (error) {
       context.logger.error({ error }, "[wishlist] Error while deleting wishlist of customer");
       return { success: false };

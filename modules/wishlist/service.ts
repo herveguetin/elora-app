@@ -46,9 +46,10 @@ export const createCustomerWishlist = async (context: CustomContext, payload: Cr
   return await getCustomerWishlists(context);
 };
 
-export const deleteCustomerWishlist = async (context: CustomContext, wishlistId: string): Promise<void> => {
+export const deleteCustomerWishlist = async (context: CustomContext, wishlistId: string) => {
   const wishlist = await getCustomerWishlist(context, wishlistId);
-  return await deleteWishlist(context, wishlist.id);
+  await deleteWishlist(context, wishlist.id);
+  return await getCustomerWishlists(context);
 };
 
 export const getWishlistItem = async (context: CustomContext, wishlistId: string, productGid: string) => {
