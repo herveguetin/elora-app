@@ -5,6 +5,7 @@ import {
   enrichWishlist,
   getCustomerWishlist,
   makeAuthContext,
+  updateCustomerWishlist,
 } from "../../modules";
 
 export async function loader({ request, params, context }: CustomFunctionArgs) {
@@ -25,5 +26,16 @@ export async function action({ request, params, context }: CustomFunctionArgs) {
       return { success: false };
     }
   }
+
+  if (context.request.method === "PATCH") {
+    const data = await request.json()
+    try {
+      return await updateCustomerWishlist(context, data.id!, data.wishlistTitle!);
+    } catch (error) {
+      context.logger.error({ error }, "[wishlist] Error while updating wishlist of customer");
+      return { success: false };
+    }
+  }
+
   return Response.json({ error: "Method not allowed" }, { status: 405 });
 }

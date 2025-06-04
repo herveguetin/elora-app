@@ -9,7 +9,7 @@ export async function action({ request, params, context }: CustomFunctionArgs) {
       const wishlist = await deleteProductFromWishlist(context, params.id!, params.productGid!);
       return { success: true, wishlist };
     } catch (error) {
-      context.logger.error({ error }, "[wishlist] Error while deleting wishlist of customer");
+      context.logger.error({ error }, "[wishlist] Error while deleting product from wishlist of customer");
       return { success: false };
     }
   }

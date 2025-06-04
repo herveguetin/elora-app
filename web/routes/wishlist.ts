@@ -15,7 +15,7 @@ export async function action({ request, context }: CustomFunctionArgs) {
       return await createCustomerWishlist(context, body);
     } catch (error) {
       context.logger.error({ error }, "[planner] Error while creating customer wishlist");
-      return { success: false };
+      return await getCustomerWishlists(context);
     }
   }
   return Response.json({ error: "Method not allowed" }, { status: 405 });

@@ -46,6 +46,17 @@ export const createCustomerWishlist = async (context: CustomContext, payload: Cr
   return await getCustomerWishlists(context);
 };
 
+export const updateCustomerWishlist = async (
+  context: CustomContext,
+  wishlistId: string,
+  wishlistTitle: string
+) => {
+  const wishlist = await getCustomerWishlist(context, wishlistId);
+  context.logger.error({wishlistTitle: wishlistTitle, wishlistId}, "title")
+  await context.api.wishlist.update(wishlist.id, { title: wishlistTitle });
+  return await getCustomerWishlists(context);
+};
+
 export const deleteCustomerWishlist = async (context: CustomContext, wishlistId: string) => {
   const wishlist = await getCustomerWishlist(context, wishlistId);
   await deleteWishlist(context, wishlist.id);
