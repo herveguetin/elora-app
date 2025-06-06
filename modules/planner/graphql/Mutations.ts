@@ -31,3 +31,21 @@ export const SET_CUSTOMER_PLANNER =
       }
     }
   `;
+
+export const CREATE_REDIRECT =
+  /* GraphQL */
+  `
+    mutation CreateUrlRedirect($path: String!, $target: String!) {
+      urlRedirectCreate(urlRedirect: { path: $path, target: $target }) {
+        urlRedirect {
+          id
+          path
+          target
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;

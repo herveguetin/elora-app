@@ -16,6 +16,8 @@ export const settings: GadgetSettings = {
           "write_customers",
           "unauthenticated_read_product_listings",
           "read_themes",
+          "read_online_store_navigation",
+          "write_online_store_navigation",
         ],
       },
     },

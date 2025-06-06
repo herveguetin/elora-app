@@ -1,11 +1,29 @@
 import { PlannerRecord, ShopifyShopRecord } from ".gadget/client/types-esm";
 import { PlannerMetaobject, SyncPlannersResponse } from "modules/planner/types";
 import { CustomContext } from "types";
-import { PLANNERS_METAOBJECT_TYPE } from "../../../planner/config";
+import { CREATE_REDIRECT } from "../../../../modules/planner/graphql/Mutations";
+import {
+  PLANNERS_AFFILIATION_REQUEST_PARAM,
+  PLANNERS_AFFILIATION_ROUTE,
+  PLANNERS_METAOBJECT_TYPE,
+} from "../../../planner/config";
 import { ALL_PLANNERS_QUERY } from "../../graphql/Queries";
 
 export const getPlanners = async (context: CustomContext): Promise<PlannerRecord[]> => {
-  return await context.api.planner.findMany();
+  // use allRecords to store all records
+  const allRecords = [];
+  let records = await context.api.planner.findMany({ first: 250 });
+
+  allRecords.push(...records);
+
+  // loop through additional pages to get all protected orders
+  while (records.hasNextPage) {
+    // paginate
+    records = await records.nextPage();
+    allRecords.push(...records);
+  }
+
+  return records;
 };
 
 export const getPlannerByAttribute = async (
@@ -58,8 +76,11 @@ const syncPlanner = async (
   planner: PlannerMetaobject,
   response: SyncPlannersResponse
 ): Promise<void> => {
+  const shopify = await context.connections.shopify.forShopId(shopId);
+  const url = new URL(`https://fake.com${PLANNERS_AFFILIATION_ROUTE}`);
   const findField = (key: string) => planner.fields.find((field) => field.key === key)?.value ?? "";
-  
+  let usedPlanner = await findPlannerToSync(context, planner);
+
   const data = {
     gid: planner.id,
     nom: findField("nom"),
@@ -69,14 +90,19 @@ const syncPlanner = async (
     shop: { _link: shopId },
   };
 
-  const existingPlanner = await findPlannerToSync(context, planner);
-
   try {
-    if (existingPlanner) {
-      await context.api.planner.update(existingPlanner.id, data);
+    if (usedPlanner) {
+      await context.api.planner.update(usedPlanner.id, data);
     } else {
-      await context.api.planner.create(data);
+      usedPlanner = await context.api.planner.create(data);
     }
+
+    // Write url redirect
+    url.searchParams.set(PLANNERS_AFFILIATION_REQUEST_PARAM, usedPlanner.handle);
+    await shopify.graphql(CREATE_REDIRECT, {
+      path: `/${usedPlanner.handle}`,
+      target: url.pathname + url.search,
+    });
   } catch (error) {
     const message = `[planner] Error syncing planner ${planner.id} for shop ${shopId}`;
     context.logger.error({ error }, message);
